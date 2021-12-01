@@ -7,6 +7,8 @@ use CodeIgniter\Model;
 class ComicModel extends Model
 {
     protected $table = 'comics';
+    protected $useTimestamps = true;
+    protected $allowedFields = ['title', 'slug', 'penulis', 'penerbit', 'sampul'];
 
     public function getComic($slug = false)
     {

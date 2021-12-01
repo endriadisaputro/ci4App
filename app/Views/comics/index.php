@@ -3,7 +3,13 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h2>Data Komik</h2>
+            <h2 class="my-3">Data Komik</h2>
+            <?php if (session()->getFlashdata('success')) : ?>
+                <div class="alert alert-success" role="alert">
+                    <?= session()->getFlashdata('success'); ?>
+                </div>
+            <?php endif; ?>
+            <a href="/comics/create" class="btn btn-primary mb-2">Create New Data</a>
             <table class="table">
                 <thead>
                     <tr>
