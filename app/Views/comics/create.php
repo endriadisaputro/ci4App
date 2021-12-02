@@ -2,7 +2,7 @@
 <?= $this->section('content'); ?>
 <div class="container">
     <h2 class="mt-2 mb-5">Create new Data</h2>
-    <form action="/comics/save" method="post">
+    <form action="/comics/save" method="post" enctype="multipart/form-data">
         <?= csrf_field(); ?>
         <div class="mb-3 row">
             <label for="title" class="col-md-1 col-form-label">Title</label>
@@ -33,8 +33,14 @@
         </div>
         <div class="mb-3 row">
             <label for="sampul" class="col-md-1 col-form-label">sampul</label>
-            <div class="col-md-6">
-                <input type="input" class="form-control" id="sampul" name="sampul">
+            <div class="col-md-4">
+                <input type="file" class="form-control <?= ($validation->hasError('sampul')) ? 'is-invalid' : ''; ?>" id="sampul" name="sampul" onchange="previewImg()">
+                <div class="invalid-feedback">
+                    <?= $validation->getError('sampul'); ?>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <img src="/img/login.png" class="img-thumbnail img-preview">
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
