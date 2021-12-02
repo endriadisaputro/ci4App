@@ -11,6 +11,7 @@ class Comics extends BaseController
     {
         $this->comicsData = new ComicModel();
     }
+
     public function index()
     {
         // $comics = $this->comicsData->findAll();
@@ -65,6 +66,55 @@ class Comics extends BaseController
         ]);
 
         session()->setFlashdata('success', 'Data successfully to added..');
+        return redirect()->to('/comics');
+    }
+
+    public function delete($id)
+    {
+        $this->comicsData->delete($id);
+        session()->setFlashdata('success', 'Data successfully to deleted..');
+        return redirect()->to('/comics');
+    }
+
+    public function edit($slug)
+    {
+        $data = [
+            'title' => 'Edit Comic',
+            'validation' => \Config\Services::validation(),
+            'comic' => $this->comicsData->getComic($slug)
+        ];
+        return view('comics/edit', $data);
+    }
+
+    public function update($id)
+    {
+        //Cek judul
+        $comicLama = $this->comicsData->getComic($this->request->getVar('slug'));
+        if ($comicLama['title'] == $this->request->getVar('title')) {
+            $rule_title = 'required';
+        } else {
+            $rule_title = 'required|is_unique[comics.title]';
+        }
+        // Validasi input
+        if (!$this->validate([
+            'title' => $rule_title,
+            'penulis' => 'required',
+            'penerbit' => 'required'
+        ])) {
+            $validation = \Config\Services::validation();
+            return redirect()->to('/comics/edit/' . $this->request->getVar('slug'))->withInput()->with('validation', $validation);
+        }
+
+        $slug = url_title($this->request->getVar('title'), '-', true);
+        $this->comicsData->save([
+            'id' => $id,
+            'title' => $this->request->getVar('title'),
+            'slug' => $slug,
+            'penulis' => $this->request->getVar('penulis'),
+            'penerbit' => $this->request->getVar('penerbit'),
+            'sampul' => $this->request->getVar('sampul')
+        ]);
+        session()->setFlashdata('success', 'Data successfully to edit..');
         return redirect()->to('/comics');
     }
 }

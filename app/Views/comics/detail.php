@@ -15,8 +15,14 @@
                             <p class="card-text"><b>Penulis : </b><?= $comic['penulis']; ?></p>
                             <p class="card-text"><small class="text-muted"><b>Penerbit : </b><?= $comic['penerbit']; ?></small></p>
 
-                            <a href="" class="btn btn-success">Edit</a>
-                            <a href="" class="btn btn-danger">Hapus</a>
+                            <a href="/comics/edit/<?= $comic['slug']; ?>" class="btn btn-success">Edit</a>
+
+                            <form action="/comic/<?= $comic['id']; ?>" class=" d-inline" method="post">
+                                <?= csrf_field(); ?>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="btn btn-danger" type="submit" onclick="return confirm('apakah anda yakin?');">Delete</button>
+                            </form>
+
                             <a href="/comics" class="btn btn-warning">Kembali</a>
                         </div>
                     </div>

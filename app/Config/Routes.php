@@ -33,7 +33,10 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Pages::index');
 
-$routes->get('/comic/(:segment)', 'Comics::detail/$1');
+$routes->get('/comic/create', 'Comics::create');
+$routes->get('/comic/edit/(:segment)', 'Comics::edit/$1');
+$routes->delete('comic/(:num)', 'Comics::delete/$1');
+$routes->get('/comic/(:any)', 'Comics::detail/$1');
 
 /*
  * --------------------------------------------------------------------
