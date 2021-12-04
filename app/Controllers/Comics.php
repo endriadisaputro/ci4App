@@ -153,7 +153,7 @@ class Comics extends BaseController
             // Move gambar
             $fileSampul->move('img', $namaSampul);
             // hapus file yg lama
-            unlink('img' . $this->request->getVar('sampulLama'));
+            unlink('img/' . $this->request->getVar('sampulLama'));
         }
 
 
